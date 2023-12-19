@@ -1,0 +1,9 @@
+---
+- hosts: dev-servers
+  tasks:
+    - name: Estabish a login to ECR
+      shell: aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 668806726900.dkr.ecr.eu-west-3.amazonaws.com
+    - name: Pull the image from ECR to CD-derver
+      shell: docker pull 668806726900.dkr.ecr.eu-west-3.amazonaws.com/jenkins-ecr:114
+    - name: Run container using the docker image
+      shell: docker run --name=cicdcontainer -d -p 8080:8080  668806726900.dkr.ecr.eu-west-3.amazonaws.com/jenkins-ecr:114
