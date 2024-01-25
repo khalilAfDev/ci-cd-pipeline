@@ -1,4 +1,8 @@
 pipeline {
+
+    agent any
+
+    environment {
       REGISTRY = "373610515267.dkr.ecr.eu-west-1.amazonaws.com/cicd-ecr"
       AWS_DEFAULT_REGION = "eu-west-1"
       AWS_ACCOUNT_ID = "373610515267"
