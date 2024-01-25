@@ -1,9 +1,5 @@
 pipeline {
-    
-    agent any
-    
-    environment {
-      dockerImage = '' 
+      REGISTRY = "373610515267.dkr.ecr.eu-west-1.amazonaws.com/cicd-ecr"
       AWS_DEFAULT_REGION = "eu-west-1"
       AWS_ACCOUNT_ID = "373610515267"
       IMAGE_REPO_NAME = "cicd-ecr"
@@ -22,7 +18,7 @@ pipeline {
         
         stage('Step 2 - Build the package') {
             steps {
-              sh 'mvn clean package -Dserver.port=8081'
+              sh 'mvn clean package'
             }
      
         }
@@ -46,7 +42,7 @@ pipeline {
         stage("Step 4 - Building Docker image") {
             steps {
                 script{
-                    dockerImage = docker.build registry  + ":$BUILD_NUMBER"
+                    docker.build REGISTRY  + ":$BUILD_NUMBER"
                 }
             }
         }
