@@ -3,8 +3,6 @@ pipeline {
     agent any
     
     environment {
-      registry = "373610515267.dkr.ecr.eu-west-1.amazonaws.com/cicd-ecr"
-      registryCredential = ''
       dockerImage = '' 
       AWS_DEFAULT_REGION = "eu-west-1"
       AWS_ACCOUNT_ID = "373610515267"
@@ -16,7 +14,7 @@ pipeline {
     }
     
     stages {
-        stage('Step 1 - Clonning the project') {
+        stage('Step 1 - Cloning the project') {
             steps {
                 git branch: 'main', url: 'https://github.com/oadya/ci-cd-pipeline.git'
             }
@@ -45,7 +43,7 @@ pipeline {
                }
             }
         }
-        stage("Step 4 - image build") {
+        stage("Step 4 - Building Docker image") {
             steps {
                 script{
                     dockerImage = docker.build registry  + ":$BUILD_NUMBER"
@@ -62,7 +60,7 @@ pipeline {
         }
     }    
     
-        stage("Step 6 - Push image") {
+        stage("Step 6 - Push image to AWS ECR") {
             steps {
                 script{
                      sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:$BUILD_NUMBER"
@@ -71,7 +69,7 @@ pipeline {
             }
         }        
          
-        stage("Step 7 - Cleaning up") {
+        stage("Step 7 - Cleaning up images") {
             steps {
                 script{
                      sh "docker rmi  ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:$BUILD_NUMBER"
@@ -83,7 +81,6 @@ pipeline {
         stage("Step 8 - Deploy via Ansible") {
             steps {
                   ansiblePlaybook credentialsId: 'df561976-e106-4f6c-9787-5988cec02618', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts.ini', playbook: 'playbook.yml', vaultTmpPath: ''
-                    
             }
         }
     }
