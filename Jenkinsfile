@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Step 1 - Cloning the project') {
             steps {
-                git branch: 'main', url: 'https://github.com/oadya/ci-cd-pipeline.git'
+                git branch: 'cicd-grp01', url: 'https://github.com/khalilAfDev/ci-cd-pipeline.git'
             }
         }
         
