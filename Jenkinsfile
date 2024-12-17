@@ -45,8 +45,13 @@ pipeline {
         }
         stage("Step 4 - Building Docker image") {
             steps {
-                script{
-                    docker.build REGISTRY + ":$BUILD_NUMBER"
+                script {
+                    sh """
+                        pwd
+                        ls -la
+                        cat Dockerfile
+                        docker build -t ${REGISTRY}:${BUILD_NUMBER} .
+                    """
                 }
             }
         }
