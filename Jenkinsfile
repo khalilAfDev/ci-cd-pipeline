@@ -46,7 +46,7 @@ pipeline {
         stage("Step 4 - Building Docker image") {
             steps {
                 script{
-                    docker build -t ${REGISTRY}:${BUILD_NUMBER}
+                    docker.build REGISTRY + ":$BUILD_NUMBER"
                 }
             }
         }
