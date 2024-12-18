@@ -3,10 +3,10 @@ pipeline {
     agent any
 
     environment {
-      REGISTRY = "772004002961.dkr.ecr.eu-west-1.amazonaws.com/grp_04/cicdecr"
+      REGISTRY = "772004002961.dkr.ecr.eu-west-1.amazonaws.com/grp-01"
       AWS_DEFAULT_REGION = "eu-west-1"
       AWS_ACCOUNT_ID = "772004002961"
-      IMAGE_REPO_NAME = "grp_04/cicdecr"
+      IMAGE_REPO_NAME = "grp-01"
     }
     
    tools {
@@ -77,7 +77,7 @@ pipeline {
         stage("Step 7 - Cleaning up images") {
             steps {
                 script{
-                     sh "docker rmi  ${AWS_ACCOUNT_ID}.dkr.ecr.${}.amazonaws.com/${IMAGE_REPO_NAME}:$BUILD_NUMBER"
+                     sh "docker rmi  ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:$BUILD_NUMBER"
 
                 }
             }
