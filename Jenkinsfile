@@ -47,9 +47,6 @@ pipeline {
             steps {
                 script {
                     sh """
-                        pwd
-                        ls -la
-                        cat Dockerfile
                         docker build -t ${REGISTRY}:${BUILD_NUMBER} .
                     """
                 }
