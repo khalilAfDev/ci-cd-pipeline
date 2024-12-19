@@ -85,7 +85,7 @@ pipeline {
     
         stage("Step 8 - Deploy via Ansible") {
             steps {
-                  ansiblePlaybook credentialsId: 'df561976-e106-4f6c-9787-5988cec02618', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts.ini', playbook: 'playbook.yml', vaultTmpPath: ''
+                  ansiblePlaybook becomeUser: 'ubuntu', credentialsId: 'df561976-e106-4f6c-9787-5988cec02618', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts.ini', playbook: 'playbook.yml', vaultTmpPath: ''
             }
         }
     }
